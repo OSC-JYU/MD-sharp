@@ -1,0 +1,12 @@
+{
+    "task": {
+        "id": "resize",
+        "params": { "width": 400 }
+    },
+    "file": {
+        "@rid": "#1:1",
+        "type": "image",
+        "extension": "jpg",
+        "label": "sample.jpg"
+    }
+}

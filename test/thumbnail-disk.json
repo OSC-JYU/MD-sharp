@@ -1,0 +1,14 @@
+{
+    "task": {
+        "id": "thumbnail",
+        "params": { "width": 800 }
+    },
+    "file": {
+        "@rid": "#85:51",
+        "type": "image",
+        "extension": "jpg",
+        "label": "85_51.jpg",
+        "path": "data/projects/1_4/files/85_51/85_51.jpg"
+    },
+    "userId": "local.user@localhost"
+}

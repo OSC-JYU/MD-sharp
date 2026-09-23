@@ -1,0 +1,12 @@
+{
+    "task": {
+        "id": "thumbnail",
+        "params": { "width": 800 }
+    },
+    "file": {
+        "@rid": "#1:1",
+        "type": "image",
+        "extension": "jpg",
+        "label": "sample.jpg"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "task": {
+        "id": "rotate",
+        "params": { "rotate": 90 }
+    },
+    "file": {
+        "@rid": "#1:1",
+        "type": "image",
+        "extension": "jpg",
+        "label": "sample.jpg"
+    }
+}

@@ -97,16 +97,16 @@
             "output": "image",
             "description": "Blur image.",
             "params": {
-                "sigma": 2
+                "amount": 20
             },
             "params_help": {
-                "sigma": {
-                    "name": "sigma",
-                    "help": "How much image is blurred. Note that sigma is an absolute value, not a percentage. This means that the same sigma value blurs a small image more than a large image.",
-                    "default": 2
+                "amount": {
+                    "name": "amount",
+                    "help": "How much image is blurred, as a percentage (0-100) of image size, so the effect looks similar regardless of resolution.",
+                    "default": 20
                 }
             },
-            "info": "I blurred image by {{sigma}}."
+            "info": "I blurred image by {{amount}}%."
         },
 
         "convert": {

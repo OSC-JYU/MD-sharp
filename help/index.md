@@ -18,7 +18,7 @@
 - fit: Resize to fit inside a width x height box, keeping aspect ratio.
 - flip: Flip image vertically.
 - rotate: Rotate image by a given angle.
-- blur: Gaussian blur by sigma.
+- blur: Gaussian blur by amount (0-100%, scaled to image size).
 - convert: Convert image to another format (jpeg/png/webp).
 
 Task parameters are defined in service.json.

@@ -1,0 +1,11 @@
+{
+    "task": {
+        "id": "extract_rois",
+        "params": { "mask": "white" }
+    },
+    "file": {
+        "type": "roi.json",
+        "extension": "json",
+        "source": { "type": "image", "extension": "jpg" }
+    }
+}

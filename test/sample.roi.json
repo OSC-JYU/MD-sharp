@@ -1,0 +1,5 @@
+{
+    "roi_1": { "id": "roi_1", "type": "rect", "left": 10, "top": 10, "width": 25, "height": 50, "label": "left box" },
+    "roi_2": { "id": "roi_2", "type": "circle", "cx": 60, "cy": 50, "r": 20 },
+    "roi_3": { "id": "roi_3", "type": "polygon", "points": [{ "xPct": 70, "yPct": 10 }, { "xPct": 95, "yPct": 10 }, { "xPct": 82, "yPct": 40 }] }
+}

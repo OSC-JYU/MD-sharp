@@ -133,6 +133,37 @@
                 }
             },
             "info": "I converted image to {{type}}. JPEG quality is {{quality}}."
+        },
+
+        "extract_rois": {
+            "name": "Extract regions",
+            "output": "image",
+            "source": "source_file",
+            "supported_types": ["roi.json", "polygons.json"],
+            "behaviour": "one-to-many",
+            "output_set": "Regions",
+            "description": "Cut each region (drawn ROIs, or lines found by line segmentation) out of the image it was made on, one image per region.",
+            "params": {
+                "mask": "white",
+                "layer": "lines"
+            },
+            "params_help": {
+                "mask": {
+                    "name": "outside the shape",
+                    "help": "What to do with the area outside a polygon or circle (rectangles are always cut as is).",
+                    "default": "white",
+                    "values": [{"title": "white", "value": "white"}, {"title": "transparent (png)", "value": "transparent"}, {"title": "keep (bounding box)", "value": "none"}],
+                    "display": "dropdown"
+                },
+                "layer": {
+                    "name": "segmentation layer",
+                    "help": "For line segmentation results: extract text lines or text regions.",
+                    "default": "lines",
+                    "values": [{"title": "lines", "value": "lines"}, {"title": "regions", "value": "regions"}],
+                    "display": "dropdown"
+                }
+            },
+            "info": "I extracted the regions from the image."
         }
     }
 }

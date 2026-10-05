@@ -35,7 +35,9 @@ enable disk mode; leave it unset to run purely as an HTTP API.
 ## Tasks
 
 See [help/index.md](help/index.md) or `GET /help` for the list of supported tasks
-(`thumbnail`, `resize`, `fit`, `flip`, `rotate`, `blur`, `convert`).
+(`thumbnail`, `resize`, `fit`, `flip`, `rotate`, `blur`, `convert`, `extract_rois`).
+
+Run the tests with `npm test`.
 
 ## Development
 

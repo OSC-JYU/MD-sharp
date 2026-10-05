@@ -164,6 +164,35 @@
                 }
             },
             "info": "I extracted the regions from the image."
+        },
+
+        "erase_rois": {
+            "name": "Erase regions",
+            "output": "image",
+            "source": "source_file",
+            "supported_types": ["roi.json", "polygons.json"],
+            "behaviour": "one-to-one",
+            "description": "Paint every region (drawn ROIs, or lines found by line segmentation) over with one color in the image it was made on.",
+            "params": {
+                "color": "#ffffff",
+                "layer": "lines"
+            },
+            "params_help": {
+                "color": {
+                    "name": "fill color",
+                    "help": "Color the regions are filled with, as #rrggbb or a color name.",
+                    "default": "#ffffff",
+                    "display": "textinput"
+                },
+                "layer": {
+                    "name": "segmentation layer",
+                    "help": "For line segmentation results: erase text lines or text regions.",
+                    "default": "lines",
+                    "values": [{"title": "lines", "value": "lines"}, {"title": "regions", "value": "regions"}],
+                    "display": "dropdown"
+                }
+            },
+            "info": "I filled the regions with {{color}}."
         }
     }
 }

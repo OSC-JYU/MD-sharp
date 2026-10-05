@@ -67,3 +67,48 @@ test('extract_rois without a source image fails clearly', async () => {
         /needs the source image/
     );
 });
+
+async function pixel(file, x, y) {
+    const { data, info } = await sharp(file).raw().toBuffer({ resolveWithObject: true });
+    const i = (y * info.width + x) * info.channels;
+    return [data[i], data[i + 1], data[i + 2]];
+}
+
+test('erase_rois fills every region of a roi.json in one output image', async () => {
+    const out = await tmpDir();
+    const results = await runTask('erase_rois', fixture('sample.roi.json'), 'json', out, { color: '#ff0000', type: 'png' },
+        { sourcePath: fixture('sample.jpg') });
+    assert.equal(results.length, 1);
+    const erased = path.join(out, results[0].filename);
+    const meta = await sharp(erased).metadata();
+    assert.deepEqual([meta.width, meta.height], [640, 480]);
+    // centre of the rect, the circle and the triangle are red; a point outside all is untouched
+    for (const [x, y] of [[144, 168], [384, 240], [525, 100]]) {
+        assert.deepEqual(await pixel(erased, x, y), [255, 0, 0], `(${x},${y}) is filled`);
+    }
+    assert.deepEqual(await pixel(erased, 20, 460), await pixel(fixture('sample.jpg'), 20, 460));
+    await fs.remove(out);
+});
+
+test('erase_rois fills all lines of a polygons.json', async () => {
+    const out = await tmpDir();
+    const polygons = fs.readJSONSync(fixture('htr3.polygons.json')).line_polygons;
+    const results = await runTask('erase_rois', fixture('htr3.polygons.json'), 'json', out, { color: '#00ff00', type: 'png' },
+        { sourcePath: fixture('htr3.jpg') });
+    const erased = path.join(out, results[0].filename);
+    // the centre of every line is now green
+    for (const line of polygons) {
+        const xs = line.map(p => p[0]); const ys = line.map(p => p[1]);
+        const cx = Math.round((Math.min(...xs) + Math.max(...xs)) / 2);
+        const cy = Math.round((Math.min(...ys) + Math.max(...ys)) / 2);
+        assert.deepEqual(await pixel(erased, cx, cy), [0, 255, 0], `line centre (${cx},${cy}) is filled`);
+    }
+    await fs.remove(out);
+});
+
+test('erase_rois rejects a color that is not a plain color', async () => {
+    const { safeColor } = await import('../lib/rois.mjs');
+    assert.equal(safeColor('"/><script>'), '#ffffff');
+    assert.equal(safeColor('#123abc'), '#123abc');
+    assert.equal(safeColor('black'), 'black');
+});

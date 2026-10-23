@@ -35,7 +35,15 @@ enable disk mode; leave it unset to run purely as an HTTP API.
 ## Tasks
 
 See [help/index.md](help/index.md) or `GET /help` for the list of supported tasks
-(`thumbnail`, `resize`, `fit`, `flip`, `rotate`, `blur`, `convert`, `extract_rois`, `erase_rois`).
+(`thumbnail`, `resize`, `fit`, `flip`, `rotate`, `blur`, `convert`, `extract_rois`, `erase_rois`, `OSD_rotate`).
+
+`OSD_rotate` is the one task with two inputs. Its descriptor has
+`"source": "source_file"`, so MessyDesk adds the image the `osd.json` was made
+from to the queue message as `file.source`; the task input (`file`) is the
+`osd.json`. In API mode the consumer uploads the image as an extra `source`
+part. When `osd.json` says `rotate: 0` nothing is written: the response is
+`files: [{ ref_file_rid, label, extension, type }]` and MessyDesk creates a
+reference node sharing the original image's bytes.
 
 Run the tests with `npm test`.
 

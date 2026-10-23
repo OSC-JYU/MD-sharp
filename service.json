@@ -92,6 +92,17 @@
             "info": "I rotated image {{rotate}} degrees."
         },
 
+        "OSD_rotate": {
+            "name": "Auto-rotate (OSD)",
+            "output": "image",
+            "source": "source_file",
+            "description": "Rotate image by angle given by orientation detection.",
+            "supported_types": ["osd.json"],
+            "params": {},
+            "params_help": {},
+            "info": "I rotated image based on orientation detection."
+        },
+
         "blur": {
             "name": "Blur",
             "output": "image",

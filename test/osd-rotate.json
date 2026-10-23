@@ -1,0 +1,18 @@
+{
+    "task": {
+        "id": "OSD_rotate",
+        "params": {}
+    },
+    "file": {
+        "@rid": "#2:1",
+        "type": "osd.json",
+        "extension": "json",
+        "label": "sample.jpg.osd.json",
+        "source": {
+            "@rid": "#1:1",
+            "type": "image",
+            "extension": "jpg",
+            "label": "sample.jpg"
+        }
+    }
+}

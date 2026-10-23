@@ -35,7 +35,7 @@ enable disk mode; leave it unset to run purely as an HTTP API.
 ## Tasks
 
 See [help/index.md](help/index.md) or `GET /help` for the list of supported tasks
-(`thumbnail`, `resize`, `fit`, `flip`, `rotate`, `blur`, `convert`, `extract_rois`, `erase_rois`, `OSD_rotate`).
+(`thumbnail`, `resize`, `fit`, `flip`, `rotate`, `blur`, `convert`, `extract_rois`, `erase_rois`, `erase_outside_rois`, `grayscale_rois`, `grayscale_outside_rois`, `OSD_rotate`).
 
 `OSD_rotate` is the one task with two inputs. Its descriptor has
 `"source": "source_file"`, so MessyDesk adds the image the `osd.json` was made

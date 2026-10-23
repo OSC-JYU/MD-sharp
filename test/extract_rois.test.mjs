@@ -112,3 +112,41 @@ test('erase_rois rejects a color that is not a plain color', async () => {
     assert.equal(safeColor('#123abc'), '#123abc');
     assert.equal(safeColor('black'), 'black');
 });
+
+const SAMPLE = [[144, 168], [384, 240], [525, 100]]; // rect, circle and triangle centres
+const OUTSIDE = [20, 460];
+
+async function runOnSample(task, params = {}) {
+    const out = await tmpDir();
+    const results = await runTask(task, fixture('sample.roi.json'), 'json', out, { type: 'png', ...params },
+        { sourcePath: fixture('sample.jpg') });
+    assert.equal(results.length, 1);
+    return { file: path.join(out, results[0].filename), out };
+}
+
+const isGray = ([r, g, b]) => Math.abs(r - g) <= 1 && Math.abs(g - b) <= 1;
+
+test('erase_outside_rois keeps the regions and fills the rest in one image', async () => {
+    const { file, out } = await runOnSample('erase_outside_rois', { color: '#0000ff' });
+    for (const [x, y] of SAMPLE) {
+        assert.deepEqual(await pixel(file, x, y), await pixel(fixture('sample.jpg'), x, y));
+    }
+    assert.deepEqual(await pixel(file, ...OUTSIDE), [0, 0, 255]);
+    await fs.remove(out);
+});
+
+test('grayscale_rois grays only the regions', async () => {
+    const { file, out } = await runOnSample('grayscale_rois');
+    for (const [x, y] of SAMPLE) assert.ok(isGray(await pixel(file, x, y)), `(${x},${y}) is gray`);
+    assert.deepEqual(await pixel(file, ...OUTSIDE), await pixel(fixture('sample.jpg'), ...OUTSIDE));
+    await fs.remove(out);
+});
+
+test('grayscale_outside_rois grays everything but the regions', async () => {
+    const { file, out } = await runOnSample('grayscale_outside_rois');
+    for (const [x, y] of SAMPLE) {
+        assert.deepEqual(await pixel(file, x, y), await pixel(fixture('sample.jpg'), x, y));
+    }
+    assert.ok(isGray(await pixel(file, ...OUTSIDE)));
+    await fs.remove(out);
+});

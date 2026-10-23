@@ -204,6 +204,79 @@
                 }
             },
             "info": "I filled the regions with {{color}}."
+        },
+
+        "erase_outside_rois": {
+            "name": "Erase outside regions",
+            "output": "image",
+            "source": "source_file",
+            "supported_types": ["roi.json", "polygons.json"],
+            "behaviour": "one-to-one",
+            "description": "Keep the regions (drawn ROIs, or lines found by line segmentation) and paint everything outside them over with one color. Always one image, however many regions there are.",
+            "params": {
+                "color": "#ffffff",
+                "layer": "lines"
+            },
+            "params_help": {
+                "color": {
+                    "name": "fill color",
+                    "help": "Color used for the erased area, as #rrggbb or a color name.",
+                    "default": "#ffffff",
+                    "display": "textinput"
+                },
+                "layer": {
+                    "name": "segmentation layer",
+                    "help": "For line segmentation results: use text lines or text regions.",
+                    "default": "lines",
+                    "values": [{"title": "lines", "value": "lines"}, {"title": "regions", "value": "regions"}],
+                    "display": "dropdown"
+                }
+            },
+            "info": "I filled everything outside the regions with {{color}}."
+        },
+
+        "grayscale_rois": {
+            "name": "Grayscale regions",
+            "output": "image",
+            "source": "source_file",
+            "supported_types": ["roi.json", "polygons.json"],
+            "behaviour": "one-to-one",
+            "description": "Turn the regions (drawn ROIs, or lines found by line segmentation) to grayscale; the rest of the image stays as it is.",
+            "params": {
+                "layer": "lines"
+            },
+            "params_help": {
+                "layer": {
+                    "name": "segmentation layer",
+                    "help": "For line segmentation results: use text lines or text regions.",
+                    "default": "lines",
+                    "values": [{"title": "lines", "value": "lines"}, {"title": "regions", "value": "regions"}],
+                    "display": "dropdown"
+                }
+            },
+            "info": "I turned the regions to grayscale."
+        },
+
+        "grayscale_outside_rois": {
+            "name": "Grayscale outside regions",
+            "output": "image",
+            "source": "source_file",
+            "supported_types": ["roi.json", "polygons.json"],
+            "behaviour": "one-to-one",
+            "description": "Turn everything outside the regions to grayscale; the regions keep their colors.",
+            "params": {
+                "layer": "lines"
+            },
+            "params_help": {
+                "layer": {
+                    "name": "segmentation layer",
+                    "help": "For line segmentation results: use text lines or text regions.",
+                    "default": "lines",
+                    "values": [{"title": "lines", "value": "lines"}, {"title": "regions", "value": "regions"}],
+                    "display": "dropdown"
+                }
+            },
+            "info": "I turned everything outside the regions to grayscale."
         }
     }
 }

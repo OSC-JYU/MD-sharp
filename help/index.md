@@ -23,5 +23,8 @@
 - convert: Convert image to another format (jpeg/png/webp).
 - extract_rois: Run on a `roi.json` (regions drawn in MessyDesk) or `polygons.json` (line segmentation) file; cuts every region out of the image the file was made on, one image per region. Needs the image as `message.file.source` (uploaded as the `source` part in API mode). `mask` decides what happens outside a polygon or circle: `white` (default), `transparent` (PNG) or `none` (bounding box). `layer` picks `lines` (default) or `regions` from a `polygons.json`.
 - erase_rois: Same inputs as extract_rois, but writes one image: the whole source image with every region filled with `color` (default `#ffffff`). `layer` works as above.
+- erase_outside_rois: The inverse of erase_rois: keeps the regions and fills everything outside them with `color`. Still one image, however many regions there are.
+- grayscale_rois: Same inputs as erase_rois; writes the whole source image with the regions turned to grayscale.
+- grayscale_outside_rois: The inverse: everything outside the regions is turned to grayscale, the regions keep their colors.
 
 Task parameters are defined in service.json.

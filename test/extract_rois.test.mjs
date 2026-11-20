@@ -150,3 +150,36 @@ test('grayscale_outside_rois grays everything but the regions', async () => {
     assert.ok(isGray(await pixel(file, ...OUTSIDE)));
     await fs.remove(out);
 });
+
+test('ROI tasks flag a roi.json without regions', async () => {
+    const out = await tmpDir();
+    const empty = path.join(out, 'empty.roi.json');
+    await fs.writeJSON(empty, { rois: [] });
+    for (const task of ['extract_rois', 'erase_rois', 'erase_outside_rois', 'grayscale_rois', 'grayscale_outside_rois']) {
+        const results = await runTask(task, empty, 'json', out, {}, { sourcePath: fixture('sample.jpg') });
+        assert.equal(results.length, 0);
+        assert.equal(results.noRois, true);
+    }
+});
+
+test('outputs keep the original name, extract_rois numbers the regions', async () => {
+    const { nameOutputs } = await import('../lib/routes.mjs');
+    const one = nameOutputs('rotate', [{ label: 'rotate', extension: 'png' }], { label: 'photo.jpg' });
+    assert.equal(one[0].label, 'photo.png');
+    const many = nameOutputs('extract_rois', [{ label: 'a', extension: 'png' }, { label: 'b', extension: 'png' }], { label: 'photo.jpg' });
+    assert.deepEqual(many.map(r => r.label), ['photo_1.png', 'photo_2.png']);
+    const thumb = nameOutputs('thumbnail', [{ label: 'preview', extension: 'jpg' }], { label: 'photo.jpg' });
+    assert.equal(thumb[0].label, 'preview');
+    const dotted = nameOutputs('flip', [{ label: 'flip', extension: 'jpg' }], { label: 'Report 2.1 final' });
+    assert.equal(dotted[0].label, 'Report 2.1 final.jpg');
+    const unnamed = nameOutputs('flip', [{ label: 'flip', extension: 'jpg' }], {});
+    assert.equal(unnamed[0].label, 'flip');
+});
+
+test('an image as the input of a ROI task is an image without regions', async () => {
+    const { placeholderResponse } = await import('../lib/routes.mjs');
+    const image = { '@rid': '#12:3', label: 'photo.jpg', extension: 'jpg', type: 'image' };
+    assert.deepEqual(placeholderResponse({ no_rois: 'all' }, image).response.files,
+        [{ ref_file_rid: '#12:3', label: 'photo.jpg', extension: 'jpg', type: 'image' }]);
+    assert.deepEqual(placeholderResponse({ no_rois: 'only' }, image).response.files, []);
+});

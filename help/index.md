@@ -27,4 +27,8 @@
 - grayscale_rois: Same inputs as erase_rois; writes the whole source image with the regions turned to grayscale.
 - grayscale_outside_rois: The inverse: everything outside the regions is turned to grayscale, the regions keep their colors.
 
+All five region tasks have the option `no_rois` for images without regions (no region file, or an empty one): `All files` (default) passes the original image on as a reference copy, `Only files with ROIs` leaves it out. On a region set MessyDesk makes those references itself (`no_rois_output: reference`); an image sent as the input of a region task counts as an image without regions.
+
 Task parameters are defined in service.json.
+
+Outputs keep the name of the original image (`photo.jpg` -> `photo.png`). `extract_rois` adds the number of the region (`photo_1.png`, `photo_2.png`).
